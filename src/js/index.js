@@ -16,10 +16,12 @@ const lightbox = new SimpleLightbox('.gallery a', {
 
 
 const pixabayApiInstance = new PixabayAPI();
-// console.log(pixabayApiInstance);
+
+
 loadMoreBtnEl.style.display = 'none';
 
 const handleSearchFormSubmit = async event => {
+
   try {
     event.preventDefault();
 
@@ -33,7 +35,8 @@ const handleSearchFormSubmit = async event => {
     pixabayApiInstance.q = searchQuery;
 
     const { data } = await pixabayApiInstance.fetchPhotos();
-    console.log(data);
+    console.log('pixabayApiInstance',pixabayApiInstance);
+    console.log('data',data);
 
     if (data.hits.length === 0) {
       Notiflix.Notify.failure(
@@ -46,8 +49,9 @@ const handleSearchFormSubmit = async event => {
 
       Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
 
-      
-      if (data.totalHits < pixabayApiInstance.page * 40)
+     
+      if (data.totalHits < pixabayApiInstance.page * pixabayApiInstance.per_page)
+
       {
         galleryListEl.insertAdjacentHTML(
           'beforeend',
@@ -73,8 +77,9 @@ const handleLoadMoreBtnClick = async () => {
 
    
     if (
-      data.totalHits <=
-      pixabayApiInstance.page * pixabayApiInstance.per_page
+    
+      data.totalHits <= pixabayApiInstance.page * pixabayApiInstance.per_page
+      
     ) {
       galleryListEl.insertAdjacentHTML(
         'beforeend',

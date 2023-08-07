@@ -6,6 +6,8 @@ export class PixabayAPI {
 
   page = 1;
   q = null;
+  per_page = 40;
+
 
   fetchPhotos() {
     const searchParams = new URLSearchParams({
@@ -13,9 +15,9 @@ export class PixabayAPI {
       orientation: 'horizontal',
       safesearch: 'true',
       client_id: this.#API_KEY,
-      per_page: 40,
       q: this.q,
       page: this.page,
+      per_page: this.per_page,
     });
 
     return axios.get(
